@@ -29,6 +29,11 @@ async function main() {
     await client.login({ username, password });
   }
 
+  if (!client.isLoggedIn) {
+    console.error("Login failed");
+    return;
+  }
+
   const allSketches = await client.getSketch("");
 
   const { sketchId } = await inquirer.prompt([

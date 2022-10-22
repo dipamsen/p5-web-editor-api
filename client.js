@@ -21,6 +21,7 @@ export default class Client {
       });
       this.userInfo = res.data;
       this.cookie = res.headers["set-cookie"][0];
+      this.loggedIn = true;
     } catch (err) {
       console.error(err.response.data.message);
     }
@@ -36,29 +37,29 @@ export default class Client {
   }
   async updateSketch(sketch, file, content) {
     const currTime = new Date().toISOString();
-    const res = await p5.put(
-      `/editor/projects/${sketch.id}`,
-      {
-        files: sketch.files.map((f) => {
-          if (f.name === file) {
-            f.content = content;
-            f.updatedAt = currTime;
-          }
-          return f;
-        }),
-        id: sketch.id,
-        isSaving: false,
-        owner: sketch.user,
-        updatedAt: currTime,
-      },
-      {
-        headers: { Cookie: this.cookie },
-      }
-    );
-    if (res.data.error) {
-      console.error(res.data.error);
-    } else {
+    try {
+      const res = await p5.put(
+        `/editor/projects/${sketch.id}`,
+        {
+          files: sketch.files.map((f) => {
+            if (f.name === file) {
+              f.content = content;
+              f.updatedAt = currTime;
+            }
+            return f;
+          }),
+          id: sketch.id,
+          isSaving: false,
+          owner: sketch.user,
+          updatedAt: currTime,
+        },
+        {
+          headers: { Cookie: this.cookie },
+        }
+      );
       return "Successfully updated sketch";
+    } catch (err) {
+      console.error(err.response.data.message);
     }
   }
 }
