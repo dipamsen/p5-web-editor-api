@@ -22,6 +22,7 @@ async function main() {
       {
         type: "password",
         name: "password",
+        mask: "*",
         message: "Enter your p5.js password",
       },
     ]);
@@ -56,7 +57,7 @@ async function main() {
     },
   ]);
   const fileContent = sketch.files.find((f) => f.name === file).content;
-  console.log(fileContent);
+  // console.log(fileContent);
 
   const { newContent } = await inquirer.prompt([
     {
@@ -67,7 +68,7 @@ async function main() {
       default: fileContent,
     },
   ]);
-  console.log(newContent);
+  // console.log(newContent);
 
   const { save } = await inquirer.prompt([
     {
