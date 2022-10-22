@@ -11,17 +11,15 @@ export default class Client {
     this.cookie = "";
     this.config = {};
     this.userInfo = {};
+    this.isLoggedIn = false;
   }
   async login({ username, email, password }) {
     this.config.credentials = { email: email || username, password };
     try {
-      const res = await p5.post("/editor/login", {
-        email: email || username,
-        password,
-      });
+      const res = await p5.post("/editor/login", this.config.credentials);
       this.userInfo = res.data;
       this.cookie = res.headers["set-cookie"][0];
-      this.loggedIn = true;
+      this.isLoggedIn = true;
     } catch (err) {
       console.error(err.response.data.message);
     }
