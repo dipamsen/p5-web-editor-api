@@ -12,7 +12,7 @@ This node CLI uses the internal p5.js Web Editor API to log in and edit sketches
 
 3. Log in with your p5.js Web Editor credentials and select a sketch to edit.
 
-_Recommended: First, create a new sketch in the p5 Web Editor for testing purposes. Then, run the CLI and edit the sketch._
+_**Recommended:** First, create a new sketch in the p5 Web Editor for testing purposes. Then, run the CLI with this sketch._
 
 > (Optional) Create a `.env` file with the following contents to avoid having to enter your username and password every time you run the CLI:
 >
