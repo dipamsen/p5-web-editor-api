@@ -6,27 +6,31 @@ dotenv.config();
 
 async function main() {
   const client = new Client();
-
-  if (process.env.P5_USERNAME && process.env.P5_PASSWORD) {
-    await client.login({
-      username: process.env.P5_USERNAME,
-      password: process.env.P5_PASSWORD,
-    });
+  if (client.cookie) {
+    const msg = await client.getSession();
+    console.log(msg);
   } else {
-    const { username, password } = await inquirer.prompt([
-      {
-        type: "input",
-        name: "username",
-        message: "Enter your p5.js username",
-      },
-      {
-        type: "password",
-        name: "password",
-        mask: "*",
-        message: "Enter your p5.js password",
-      },
-    ]);
-    await client.login({ username, password });
+    if (process.env.P5_USERNAME && process.env.P5_PASSWORD) {
+      await client.login({
+        username: process.env.P5_USERNAME,
+        password: process.env.P5_PASSWORD,
+      });
+    } else {
+      const { username, password } = await inquirer.prompt([
+        {
+          type: "input",
+          name: "username",
+          message: "Enter your p5.js username",
+        },
+        {
+          type: "password",
+          name: "password",
+          mask: "*",
+          message: "Enter your p5.js password",
+        },
+      ]);
+      await client.login({ username, password });
+    }
   }
 
   if (!client.isLoggedIn) {
